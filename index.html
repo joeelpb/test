@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Selection</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Main container */
+        .container {
+            display: flex;
+            gap: 20px;
+            opacity: 1;
+            transition: opacity 1.5s ease;
+        }
+
+        /* Styling for each block */
+        .block {
+            background-color: #1e1e1e;
+            padding: 30px;
+            width: 150px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover effect for blocks */
+        .block:hover {
+            transform: scale(1.05);
+            background-color: #333;
+        }
+
+        /* Centered display text */
+        .display-text {
+            position: absolute;
+            text-align: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.5s ease;
+        }
+
+        /* Fade-in and fade-out animations */
+        .fade-in {
+            opacity: 1;
+            visibility: visible;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+            animation: fadeOut 1.5s forwards;
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Links styling */
+        .link-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .link-list li {
+            margin: 10px 0;
+        }
+
+        .link-list a {
+            color: #00aaff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .link-list a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container with blocks -->
+    <div class="container">
+        <div class="block" onclick="showLinks('Football')">Football</div>
+        <div class="block" onclick="showLinks('UFC')">UFC</div>
+    </div>
+
+    <!-- Display area for links -->
+    <div id="displayText" class="display-text"></div>
+
+    <script>
+        // Link data embedded within the HTML for easy editing
+        const linkData = [
+            {
+                section: "Football",
+                links: [
+                    { name: "Viper Play", url: "https://viper-play.net" },
+                    { name: "Meth Streams", url: "https://methstreams.com" }
+                ]
+            },
+            {
+                section: "UFC",
+                links: [
+                    { name: "MMA Stream Links", url: "https://mmastreamlinks.com" },
+                    { name: "Go Luchas", url: "https://goluchas.com" },
+                    { name: "Meth Streams", url: "https://methstreams.com" }
+                ]
+            }
+        ];
+
+        // Function to handle displaying links
+        function showLinks(section) {
+            const container = document.querySelector('.container');
+            const displayText = document.getElementById('displayText');
+
+            // Clear any existing content
+            displayText.innerHTML = '';
+
+            // Fade out the container
+            container.classList.add('fade-out');
+
+            // Find the section data
+            const selectedSection = linkData.find(data => data.section === section);
+
+            // If section found, display links
+            if (selectedSection) {
+                const title = document.createElement('h2');
+                title.textContent = section;
+                displayText.appendChild(title);
+
+                const linkList = document.createElement('ul');
+                linkList.classList.add('link-list');
+
+                selectedSection.links.forEach(link => {
+                    const listItem = document.createElement('li');
+                    const anchor = document.createElement('a');
+                    anchor.href = link.url;
+                    anchor.textContent = link.name;
+                    anchor.target = "_blank"; // Open in new tab
+                    listItem.appendChild(anchor);
+                    linkList.appendChild(listItem);
+                });
+
+                displayText.appendChild(linkList);
+            } else {
+                displayText.innerHTML = `<p>No links available for ${section}</p>`;
+            }
+
+            // Show the displayText div with fade-in effect
+            displayText.classList.remove('fade-out');
+            displayText.classList.add('fade-in');
+        }
+    </script>
+</body>
+</html>
